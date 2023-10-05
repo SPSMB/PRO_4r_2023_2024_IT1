@@ -35,20 +35,26 @@ void inteligentniOdjezdy(int * nove_pole, int * ref_pole, int delka, int interva
 
 	/* prochazim referencni pole */
 	for( ;ref_pole[r] != -1; r++){
-		int hornimez = ref_pole[i];
+		int hornimez = ref_pole[r];
 		/* do noveho pole zkusim dostat maximum vlaku, tak aby navazovaly*/
-		while(){
-			int hodnota = nove_pole[i] + interval;
-
+		int hodnota = nove_pole[i-1];
+		while(1){
+			hodnota = hodnota + interval;
 			/* 1. navazujici vlak jede pozdeji a do limitu na prestup se vejde */
-			if(hodnota > hornimez && (hodnota-hornimez) < 10){
-
+			if(hodnota > hornimez && (hodnota-hornimez) <= 10){
+				nove_pole[i] = hodnota;
+				i++;
+				break;
 			/* 2. navazujici vlak jede drive a dalsi se stihne do prestupu */
 			} else if(hodnota < hornimez && (hodnota+interval) <= (hornimez+10)){
-
+				nove_pole[i] = hodnota;
+				i++;
 			/* 3. navazujici vlak jede drive a dalsi by se nestihl navazat na prestup) */
-			} else if(hodnota < hornimez && ??? ){
-
+			} else {
+				hodnota = hornimez;
+				nove_pole[i] = hodnota;
+				i++;
+				break;
 			}
 		}
 	}

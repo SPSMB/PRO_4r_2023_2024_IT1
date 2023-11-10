@@ -107,6 +107,7 @@ int main(){
 */
 
 	CitacD d(40);
+	CitacMod1 c1(5); 
 
 	d.zvetsit(30);
 	d.zmensit(10);

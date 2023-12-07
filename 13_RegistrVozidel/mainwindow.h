@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QDebug>
+#include <QInputDialog>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,6 +23,10 @@ private slots:
     void on_registr_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
     void on_btn_odstranit_clicked();
+
+    void on_btn_rename_clicked();
+
+    void on_btn_add_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -18,8 +18,12 @@ QRectF Letadlo::boundingRect() const
 
 void Letadlo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    // nahodna barva
+    int r = rand() % 256;
+    int g = rand() % 256;
+    int b = rand() % 256;
 
-    painter->setBrush(QBrush(QColor(125,125,0,255)));
+    painter->setBrush(QBrush(QColor(r,g,b,255)));
     // vykresli objekt
     painter->drawPolygon(letadlo_obrys);
 }

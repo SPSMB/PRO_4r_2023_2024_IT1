@@ -30,12 +30,15 @@ private:
     QGraphicsRectItem * automobil1;
     QGraphicsRectItem * automobil2;
     int auto_sirka;
+    int barevny_stav; // uchovava barvu obdelniku, ktery budu menit tlacitkem
 
 private slots:
     void keyPressEvent(QKeyEvent *event);
     void obsluhaCasovace();
     void on_tlacitko1_clicked();
     void on_btn_color_clicked();
+    void on_btn_vymazat_clicked();
+    void on_btn_letadlo_clicked();
 };
 
 #endif // MAINWINDOW_H

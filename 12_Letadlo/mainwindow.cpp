@@ -44,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     timer1->setInterval(100);
     timer1->start();
 
+    barevny_stav = 0;
+
 }
 
 MainWindow::~MainWindow()
@@ -110,8 +112,19 @@ void MainWindow::obsluhaCasovace()
 void MainWindow::on_tlacitko1_clicked()
 {
     // qDebug() << "Tlacitko 1 bylo stisknuto";
-    QString s = "Tlacitko 1 bylo stisknuto";
-    ui->console->append(s);
+    // QString s = "Tlacitko 1 bylo stisknuto";
+    // ui->console->append(s);
+
+    if(barevny_stav == 1){
+        automobil1->setBrush(QBrush(QColor(0,0,0,255)));
+        barevny_stav++;
+    } else if(barevny_stav == 2){
+        automobil1->setBrush(QBrush(QColor(255,255,0,255)));
+        barevny_stav = 0;
+    } else { // barevny_stav == 0
+        automobil1->setBrush(QBrush(QColor(255,0,255,255)));
+        barevny_stav++;
+    }
 }
 
 void MainWindow::on_btn_color_clicked()
@@ -136,4 +149,18 @@ void MainWindow::on_btn_color_clicked()
     //p.setColor(QPalette::Text, p.color(QPalette::Text) == Qt::black ? Qt::white : Qt::black);
 
     ui->console->setPalette(p);
+}
+
+void MainWindow::on_btn_vymazat_clicked()
+{
+    ui->console->clear();
+}
+
+void MainWindow::on_btn_letadlo_clicked()
+{
+    // bylo by dobre kontrolovat mnozstvi pridanych letadel
+    //  a bud pridat jen 1 navic nebo kazde dalsi ulozit do nejake struktury
+    Letadlo * dalsiLetadlo = new Letadlo();
+    scene->addItem(dalsiLetadlo);
+    dalsiLetadlo->setPos(350,50);
 }

@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,6 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void addItem(QListWidget * list, QListWidgetItem * item);
+    void addItem(QListWidget * list, QString itemString);
+
 private slots:
     void on_registr_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
@@ -27,6 +31,8 @@ private slots:
     void on_btn_rename_clicked();
 
     void on_btn_add_clicked();
+
+    void on_registr_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

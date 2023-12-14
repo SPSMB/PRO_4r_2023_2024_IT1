@@ -6,16 +6,47 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->registr->addItem(QString("Skoda Superb"));
 
-    for(int i = 0; i < 10; i++){
-        ui->registr->addItem(QString::number(i) + ". auto");
+    QIcon a = QIcon("../img/car2.png");
+    ui->registr->setIconSize(QSize(50,50));
+    QListWidgetItem * i1 = new QListWidgetItem(a, QString("Skoda Superb"));
+    ui->registr->addItem(i1);
+    addItem(ui->registr, QString("Skoda Superb"));
+
+    for(int i = 0; i < 10;){
+        addItem(ui->registr, QString::number(i) + ". auto");
+        i++;
+        //ui->registr->addItem(QString::number(i) + ". auto");
     }
+
+    QString style = "QListWidget::item:selected{\
+                        color: rgb(0,0,0);\
+                        background-color: yellow;\
+                     }";
+    ui->registr->setStyleSheet(style);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::addItem(QListWidget *list, QListWidgetItem *item)
+{
+    // defaultni ikona
+    QIcon ico = QIcon("../img/car1.png");
+    item->setIcon(ico);
+    list->addItem(item);
+}
+
+void MainWindow::addItem(QListWidget *list, QString itemString)
+{
+    // defaultni ikona
+    QIcon ico = QIcon("../img/car1.png");
+    QListWidgetItem * item = new QListWidgetItem(itemString);
+    item->setIcon(ico);
+    list->addItem(item);
 }
 
 
@@ -25,10 +56,22 @@ void MainWindow::on_registr_currentItemChanged(QListWidgetItem *current, QListWi
     if(current != NULL){
         QString text = current->text();
         ui->label_vyber->setText(text);
+        int w = ui->l_image->width();
+        int h = ui->l_image->height();
+        QPixmap p = current->icon().pixmap(w, h);
+        ui->l_image->setPixmap(p.scaled(w, h, Qt::KeepAspectRatio));
+        // barvicky
+        //current->setBackground(Qt::yellow);
+        //current->setForeground(Qt::black);
     } else {
         ui->label_vyber->setText(QString("Seznam je prazdny"));
     }
 
+    if(previous != NULL){
+        // barvicky
+        //previous->setBackground(Qt::white);
+        //previous->setForeground(Qt::black);
+    }
 }
 
 void MainWindow::on_btn_odstranit_clicked()
@@ -95,8 +138,29 @@ void MainWindow::on_btn_add_clicked()
     int cisloRadku = ui->registr->currentRow();
     if(! text.isEmpty()){
         QListWidgetItem * novaPolozka = new QListWidgetItem(text);
+        // tady ziskame cetu k ikone od uzivatele
+        QString path = QFileDialog::getOpenFileName(this,
+                       "Vyberte obrazek", "C:\\Users\\Tom\\Pictures");
+        qDebug() << "Ikona: " << path;
+        QIcon i = QIcon(path);
+        novaPolozka->setIcon(i);
+        novaPolozka->setSizeHint(QSize(50,50));
         ui->registr->insertItem(cisloRadku, novaPolozka);
     } else {
         QMessageBox::critical(this, "Varovani", "Nelze pridat polozku bez jmena.");
     }
 }
+
+void MainWindow::on_registr_itemClicked(QListWidgetItem *item)
+{
+  //  item->setBackground(Qt::yellow);
+  //  item->setForeground(Qt::black);
+}
+
+
+
+
+
+
+
+

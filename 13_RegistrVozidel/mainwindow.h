@@ -34,7 +34,10 @@ private slots:
 
     void on_registr_itemClicked(QListWidgetItem *item);
 
+    void on_registr2_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
 private:
     Ui::MainWindow *ui;
+    void kontrolujShodu();
 };
 #endif // MAINWINDOW_H

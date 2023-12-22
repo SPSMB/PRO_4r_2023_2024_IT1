@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     for(int i = 0; i < 10;){
         addItem(ui->registr, QString::number(i) + ". auto");
+        addItem(ui->registr2, QString::number(i) + ". auto");
         i++;
         //ui->registr->addItem(QString::number(i) + ". auto");
     }
@@ -52,6 +53,9 @@ void MainWindow::addItem(QListWidget *list, QString itemString)
 
 void MainWindow::on_registr_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
+    // kontrola shodnych nazvu s registrem 2
+    kontrolujShodu();
+
     // kontrola, ze polozka existuje
     if(current != NULL){
         QString text = current->text();
@@ -154,8 +158,42 @@ void MainWindow::on_btn_add_clicked()
 void MainWindow::on_registr_itemClicked(QListWidgetItem *item)
 {
   //  item->setBackground(Qt::yellow);
-  //  item->setForeground(Qt::black);
+    //  item->setForeground(Qt::black);
 }
+
+void MainWindow::on_registr2_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    kontrolujShodu();
+}
+
+void MainWindow::kontrolujShodu()
+{
+    // zjistim prave vybrane polozky
+    QListWidgetItem * item1 = ui->registr->currentItem();
+    QListWidgetItem * item2 = ui->registr2->currentItem();
+
+    if(item1 == NULL || item2 == NULL){
+        ui->l_shoda->setText("Zadna vybrana polozka");
+        ui->l_shoda->setStyleSheet("color: black");
+        return;
+    } else {
+        QString text1 = item1->text();
+        QString text2 = item2->text();
+
+        if(text1 == text2){
+            ui->l_shoda->setText("ANO");
+            ui->l_shoda->setStyleSheet("color: green");
+
+        } else {
+            ui->l_shoda->setText("NE");
+            ui->l_shoda->setStyleSheet("color: red");
+
+        }
+    }
+
+}
+
+
 
 
 

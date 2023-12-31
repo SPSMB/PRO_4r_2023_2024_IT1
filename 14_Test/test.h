@@ -21,6 +21,7 @@ private:
 
 public:
     Test();
+    ~Test();
     void nactiData();
     void vypisVysledky();
 };

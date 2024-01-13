@@ -3,11 +3,6 @@
 Test::Test()
 {
     t_pocSkupin = pocetRadku(); // zjistim pocet radku
-    // cout << "Pocet radku: " << t_pocSkupin << endl;
-    t_ptvs = new int[t_pocSkupin]; // dynamicka alokace
-    t_souctyVeSkupinach = new int[t_pocSkupin]; // dynamicka alokace
-    t_prumeryVeSkupinach = new float[t_pocSkupin]; // dynamicka alokace
-    t_maximaVeskupinach = new bool[t_pocSkupin]; // dynamicka alokace
     nactiData();
     t_minimum = 0;
     t_maximum = 10;
@@ -15,27 +10,22 @@ Test::Test()
     t_celkovySoucet = 0;
     t_cns = 0;
     // reset na vychozi hodnoty
-    for(int i=0; i<t_pocSkupin; i++){
-        t_maximaVeskupinach[i] = false;
+    t_maximaVeskupinach.resize(t_pocSkupin);
+    t_prumeryVeSkupinach.resize(t_pocSkupin);
+    // reset
+    for(int i=0; i < t_pocSkupin; i++){
+        t_maximaVeskupinach.push_back(false);
+        t_prumeryVeSkupinach.push_back(0);
     }
 }
 
 Test::~Test()
 {
-    for(int i=0; i<t_pocSkupin; i++){
-        delete [] t_vysledky[i];
-    }
-    delete [] t_vysledky;
-    delete [] t_ptvs;
-    delete [] t_souctyVeSkupinach;
-    delete [] t_prumeryVeSkupinach;
-    delete [] t_maximaVeskupinach;
+
 }
 
 void Test::nactiData()
 {
-    // alokace 2D pole
-    t_vysledky = new int*[t_pocSkupin];
 
     t_soubor.open("../vysledky-testu-b.txt");
     if(!t_soubor.is_open()){
@@ -47,15 +37,17 @@ void Test::nactiData()
         string radek = "";
         getline(t_soubor, radek);
         int pocet = pocetVysledku(radek); // Pocet vysledku v i-te skupine
-
-        t_vysledky[i] = new int[pocet]; // alokace pameti
-        t_ptvs[i] =pocet;
+        t_ptvs.push_back(pocet);
 
         // naplnim pole hodnotami
         stringstream s(radek);
+        QVector<int> radekData;
+        int tmp;
         for(int k=0; k<pocet; k++ ){
-            s >> t_vysledky[i][k];
+            s >> tmp;
+            radekData.push_back(tmp);
         }
+        t_vysledky.push_back(radekData);
     }
     t_soubor.close();
 }
@@ -104,7 +96,6 @@ void Test::pocitejStatistiku()
 {
     for (int s=0; s < t_pocSkupin; s++) {
         int soucetRadku = 0;
-        t_prumeryVeSkupinach[s] = 0; // reset
         for (int i=0; i<t_ptvs[s]; i++) {
             int h = t_vysledky[s][i]; // aktualni hodnota
             t_celkovySoucet += h;

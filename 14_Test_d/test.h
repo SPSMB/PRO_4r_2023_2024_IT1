@@ -5,23 +5,24 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
 class Test
 {
 private:
-    int ** t_vysledky; // 2D pole pro vysledky
+    QVector< vector<int>> t_vysledky; // 2D vector pro vysledky
     int t_pocSkupin; // pocet skupin
-    int * t_ptvs; // pocet testu ve skupine - je to pole
+    vector<int> t_ptvs; // pocet testu ve skupine - je to pole
 
     // Statisticka data
     int t_celkovySoucet; // celkovy soucet ze vsech skupin
     float t_celkovyPrumer; // celkovy prumer ze vsech skupin
     int t_celkovyPocet; // celkovy pocet vsech testu
-    int * t_souctyVeSkupinach; // soucty ve skupinach
-    float * t_prumeryVeSkupinach; // prumery ve skupinach
-    bool * t_maximaVeskupinach; // skupiny, kde bylo dosazeno maximalniho vysledku
+    vector<int> t_souctyVeSkupinach; // soucty ve skupinach
+    vector<float> t_prumeryVeSkupinach; // prumery ve skupinach
+    vector<bool> t_maximaVeskupinach; // skupiny, kde bylo dosazeno maximalniho vysledku
     int t_cns; // cislo (id) nejlepsi skupiny
     int t_maximum; // min ze vsech skupin
     int t_minimum; // max ze vsech skupin

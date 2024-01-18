@@ -12,7 +12,7 @@ using namespace std;
 class Test
 {
 private:
-    QVector< vector<int>> t_vysledky; // 2D vector pro vysledky
+    vector< vector<int>> t_vysledky; // 2D vector pro vysledky
     int t_pocSkupin; // pocet skupin
     vector<int> t_ptvs; // pocet testu ve skupine - je to pole
 

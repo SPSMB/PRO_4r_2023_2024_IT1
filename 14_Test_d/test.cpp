@@ -32,7 +32,11 @@ void Test::nactiData()
         string radek = "";
         getline(t_soubor, radek);
         int pocet = pocetVysledku(radek); // Pocet vysledku v i-te skupine
-        t_ptvs.push_back(pocet);
+
+        //t_ptvs.push_back(pocet);
+        // 2. varianta
+        t_ptvs.resize(t_pocSkupin);
+        t_ptvs[i] = pocet;
 
         // naplnim pole hodnotami
         stringstream s(radek);

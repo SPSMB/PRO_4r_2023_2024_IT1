@@ -6,6 +6,11 @@ Linka::Linka()
     l_posledni = NULL;
 }
 
+Linka::~Linka()
+{
+    smazVse();
+}
+
 void Linka::vypisStanice()
 {
     if(l_posledni != NULL){
@@ -41,6 +46,35 @@ void Linka::vlozStanici(QString jmeno)
     }
 }
 
+Stanice * Linka::existuje(QString jmeno)
+{
+    Stanice * tmp = l_posledni->dalsi;
+    Stanice * start = tmp;
+    do{
+        if(tmp->jmeno == jmeno) return tmp;
+        tmp = tmp->dalsi;
+       } while (start != tmp);
+    return NULL;
+}
+
+Stanice *Linka::odeberStanici(QString jmeno)
+{
+
+    if(l_posledni == NULL)
+    {
+        cout << "Neni co odebrat z prazdneho seznamu.\n";
+        return NULL;
+    }
+    else
+    {
+        Stanice * tmp = existuje(jmeno);
+        if(tmp != NULL)
+            odeberStanici(tmp);
+        else cout << "Zadaná stanice " << ":" << jmeno.toStdString() << " neexistuje\n";
+    }
+
+}
+
 Stanice * Linka::odeberStanici(Stanice *st)
 {
     if(l_posledni == NULL){
@@ -57,6 +91,7 @@ Stanice * Linka::odeberStanici(Stanice *st)
             if(l_posledni == st){
                 l_posledni = st->predchozi;
             }
+
             st->dalsi->predchozi = st->predchozi;
             st->predchozi->dalsi = st->dalsi;
             cout << "Odebiram stanici " << st->jmeno.toStdString() << ".\n"; // pomocny vypis
@@ -77,4 +112,33 @@ void Linka::smazVse()
     while(tmp!=NULL){
         tmp = odeberStanici(tmp);
     }
+}
+
+void Linka::vypisStanice(QString jmeno)
+{
+    if(l_posledni != NULL){
+        int citac = 1;
+        // ukazatel na prvni stanici
+        Stanice * tmp = l_posledni->dalsi;
+
+        do{
+            if(tmp->jmeno == jmeno)
+            {
+                Stanice * start = tmp;
+                do{
+                    cout << citac << ":" << tmp->jmeno.toStdString() << endl;
+                    tmp = tmp->dalsi;
+                    citac++;
+
+                } while (start != tmp);
+            }
+
+            tmp = tmp->dalsi;
+
+        }while(tmp != l_posledni->dalsi);
+    } else {
+        cout << "Seznam stanic je prazdny.\n";
+    }
+
+
 }

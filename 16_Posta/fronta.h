@@ -18,6 +18,7 @@ public:
     Osoba * prvni();               // front
     Osoba * posledni();            // back
     bool je_Prazdna();             // is_empty
+    QString toString();            // vypis fronty do stringu
 };
 
 #endif // FRONTA_H

@@ -2,5 +2,7 @@
 
 Osoba::Osoba()
 {
-
+    dalsi = NULL;
+    id = 0;
+    jmeno = "";
 }

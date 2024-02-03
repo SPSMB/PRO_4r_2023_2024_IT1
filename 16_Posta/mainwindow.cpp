@@ -21,3 +21,12 @@ MainWindow::~MainWindow()
     delete z_prepazka3;
 }
 
+// osoba, ktera je zadana v textovem poli se prida do Fronty
+void MainWindow::on_btn_pridej_clicked()
+{
+    QString jmeno = ui->le_pridej->text();
+    Osoba * os = new Osoba();
+    os->jmeno = jmeno;
+    fronta->pridej(os);
+    ui->te_fronta->setText(fronta->toString());
+}

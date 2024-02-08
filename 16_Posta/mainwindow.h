@@ -21,6 +21,8 @@ public:
 private slots:
     void on_btn_pridej_clicked();
 
+    void on_btn_prepazka1_clicked();
+
 private:
     Ui::MainWindow *ui;
     Fronta * fronta;

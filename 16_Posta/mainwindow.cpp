@@ -30,3 +30,12 @@ void MainWindow::on_btn_pridej_clicked()
     fronta->pridej(os);
     ui->te_fronta->setText(fronta->toString());
 }
+
+void MainWindow::on_btn_prepazka1_clicked()
+{
+    Osoba * os = fronta->odeber();
+    ui->te_fronta->setText(fronta->toString()); // aktualizace grafiky
+    z_prepazka1->push(os);
+    ui->te_prepazka1->setText(z_prepazka1->toString());
+    qDebug() << "Radek 37";
+}

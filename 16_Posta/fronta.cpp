@@ -13,10 +13,13 @@ Fronta::~Fronta()
 {
     qDebug() << "Vola se destruktor";
     Osoba * os;
+    int pocet = 0;
     while(!je_Prazdna()){
         os = this->odeber();
+        pocet++;
         delete os;
     }
+    qDebug() << "Destruktor: Odebrano " << pocet << " osob.";
 }
 
 // osoba uz existuje a dostanu na ni ukazatel os
@@ -26,11 +29,12 @@ void Fronta::pridej(Osoba *os)
         f_prvni = os;
         f_posledni = os;
     } else {
-        f_posledni = os;
         f_posledni->dalsi = os;
+        f_posledni = os;
     }
     os->dalsi = NULL;
     f_citac++;
+    os->id = f_citac;
     prvni();
     posledni();
 }
@@ -46,7 +50,7 @@ Osoba * Fronta::odeber()
         if(f_prvni == f_posledni){
             f_posledni = NULL;
         }
-        f_citac--;
+        // f_citac--; // nechceme, aby se citac snizoval
         f_prvni = f_prvni->dalsi;
         return os;
     }
@@ -76,7 +80,7 @@ Osoba * Fronta::posledni()
 
 bool Fronta::je_Prazdna()
 {
-    // if(citac == 0)
+    // if(citac == 0) // toto uz nejde pouzit
     if(f_prvni == NULL && f_posledni == NULL){
         return true;
     } else {

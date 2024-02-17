@@ -19,7 +19,7 @@ Fronta::~Fronta()
         pocet++;
         delete os;
     }
-    qDebug() << "Destruktor: Odebrano " << pocet << " osob.";
+    qDebug() << "Destruktor Fronta: Odebrano " << pocet << " osob.";
 }
 
 // osoba uz existuje a dostanu na ni ukazatel os

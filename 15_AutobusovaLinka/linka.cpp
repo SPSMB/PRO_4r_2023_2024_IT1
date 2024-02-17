@@ -68,9 +68,12 @@ Stanice *Linka::odeberStanici(QString jmeno)
     else
     {
         Stanice * tmp = existuje(jmeno);
-        if(tmp != NULL)
-            odeberStanici(tmp);
-        else cout << "Zadaná stanice " << ":" << jmeno.toStdString() << " neexistuje\n";
+        if(tmp != NULL){
+            return odeberStanici(tmp);
+        } else {
+            cout << "Zadaná stanice " << ":" << jmeno.toStdString() << " neexistuje\n";
+            return NULL;
+        }
     }
 
 }

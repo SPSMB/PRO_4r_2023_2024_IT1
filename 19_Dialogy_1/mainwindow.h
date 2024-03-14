@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QDebug>
+#include <QFileDialog>
+#include <QColorDialog>
+#include <QFontDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,6 +19,19 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+    void on_btn_msgBox1_clicked();
+
+    void on_btn_kviz_clicked();
+
+    void on_btn_nacist_clicked();
+
+    void on_btn_ulozitInfo_clicked();
+
+    void on_btn_color_clicked();
+
+    void on_btn_font_clicked();
 
 private:
     Ui::MainWindow *ui;

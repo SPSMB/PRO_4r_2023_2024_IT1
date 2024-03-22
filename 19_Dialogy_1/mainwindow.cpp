@@ -147,3 +147,66 @@ void MainWindow::on_btn_font_clicked()
         QMessageBox::critical(this, "Pozor", "Nebyl vybran platny font");
     }
 }
+
+void MainWindow::on_btn_pobocky_clicked()
+{
+    QStringList list = {"Kolín", "Mladá Boleslav", "Pardubice",
+                        "Tábor", "Jihlava", "Olomouc", "Lipník nad Bečvou"};
+    QStringList images = {"../img/Kolin.PNG", "../img/MB.PNG", "../img/Pardubice.PNG",
+                          "../img/Tabor.PNG","../img/Jihlava.PNG", "../img/Olomouc.PNG",
+                         "../img/Lipnik.PNG"};
+    bool ok;
+    //QString pobocka = QInputDialog::getItem(this, "Vyber pobocky",
+    //                                        "Vyberte pobocku", list, 1, false, &ok);
+    QString vstup = QInputDialog::getText(this, "Vyber pobocky",
+                          "Zadejte alespon castecny nazev pobocky",
+                          QLineEdit::Normal,"",&ok);
+    if(ok == false){
+        // uzivatel dialog zavrel krizkem, tak nic nenastavujeme
+        return;
+    }
+
+    QString filename = "";
+    QProgressDialog pdialog("Vyhledavam pobocku " + vstup,
+                            "Zrusit vyhledavani", 0, list.size(),
+                            this);
+    pdialog.setWindowModality(Qt::WindowModal);
+    pdialog.setWindowFlags(Qt::Window |
+                           Qt::WindowTitleHint |
+                           Qt::CustomizeWindowHint);
+    pdialog.setWindowTitle("Prubeh...");
+    pdialog.setMinimumDuration(0);
+
+    bool nalezeno = false;
+    for(int i=0; i<list.size(); i++){
+        if(list[i].contains(vstup,Qt::CaseInsensitive)){
+            filename = images[i];
+            pdialog.setValue(list.size());
+            nalezeno = true;
+            break;
+        }
+        pdialog.setValue(i);
+        delay(2000);
+    }
+    pdialog.setValue(list.size());
+
+    if(!nalezeno){
+        // uzivatel zadal text, ktery se nenasel
+        QMessageBox::warning(this, "Pozor", "Text nebyl nalezen");
+        return;
+    }
+
+    QIcon i1 = QIcon(filename);
+    int w = ui->l_image->width();
+    int h = ui->l_image->height();
+    QPixmap pix = i1.pixmap(w,h);
+    ui->l_image->setPixmap(pix);
+}
+
+void MainWindow::delay(int msec)
+{
+    QTime targetTime = QTime::currentTime().addMSecs(msec);
+    while(QTime::currentTime() < targetTime){
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
+}

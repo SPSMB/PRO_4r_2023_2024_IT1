@@ -153,6 +153,24 @@
      <string>Dialogy</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_pobocky">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>450</y>
+      <width>201</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Vyber pobocky</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

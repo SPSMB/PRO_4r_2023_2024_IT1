@@ -7,6 +7,9 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QInputDialog>
+#include <QTime>
+#include <QProgressDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +35,10 @@ private slots:
     void on_btn_color_clicked();
 
     void on_btn_font_clicked();
+
+    void on_btn_pobocky_clicked();
+
+    void delay(int msec);
 
 private:
     Ui::MainWindow *ui;

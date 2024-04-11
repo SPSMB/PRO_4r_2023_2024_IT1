@@ -20,6 +20,14 @@ QString Kandidat::toString()
     return vystup;
 }
 
+QString Kandidat::toABCString()
+{
+    QString vystup = "";
+    vystup += k_prijmeni;
+    vystup += " [" + k_stav + "]";
+    return vystup;
+}
+
 QString Kandidat::stav()
 {
     return k_stav;

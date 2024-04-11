@@ -1,4 +1,5 @@
 #include "firma.h"
+#include "novy.h"
 #include "ui_firma.h"
 
 Firma::Firma(QWidget *parent)
@@ -6,6 +7,8 @@ Firma::Firma(QWidget *parent)
     , ui(new Ui::Firma)
 {
     ui->setupUi(this);
+    on_btn_login_clicked();
+    f_prihlasen = "user"; // kdo je prihlasen
     Kandidat * k1 = new Kandidat("Amy", "Farrah Fowler", 1990, ":/osoby/img/Amy.PNG");
     Kandidat * k2 = new Kandidat("Leonard", "Howstadter", 1950, ":/osoby/img/Leonard.PNG");
     Kandidat * k3 = new Kandidat("Sheldon", "Cooper", 1965, ":/osoby/img/Sheldon.PNG");
@@ -53,13 +56,43 @@ void Firma::pridejKandidata(Kandidat *k, QQueue<Kandidat *> &fronta, QListWidget
 {
     fronta.enqueue(k);
     lw->addItem(k);
+    pridejKandidatadoQLW(k, ui->lw_abecedne); // pridam kandidata do abecedniho list widgetu
+}
+
+void Firma::pridejKandidatadoQLW(Kandidat *k, QListWidget *lw)
+{
+    QVariant var((int)k);
+    QListWidgetItem * item = new QListWidgetItem();
+    item->setData(Qt::UserRole, var); // tady predavam polozce list widgetu ukazatel na kandidata
+    item->setText(k->toABCString());
+
+    lw->addItem(item); // pridam polozku do seznamu
+    lw->sortItems(); // seradim polozky abecedne
+
+    qDebug() << "Pridavam " << k->toString() <<
+                " do seznamu ui->lw_abecedne.";
 }
 
 Kandidat * Firma::odeberKandidata(QQueue<Kandidat *> &fronta, QListWidget *lw)
 {
     Kandidat *k = fronta.dequeue();
     lw->takeItem(0);
+    odeberKandidatazQLW(k, ui->lw_abecedne);
     return k;
+}
+
+void Firma::odeberKandidatazQLW(Kandidat * k, QListWidget *lw)
+{
+    for(int i = 0; i < lw->count(); i++){
+        QListWidgetItem * item = lw->item(i);
+        QVariant data = item->data(Qt::UserRole);
+        int tmp = data.toInt();
+        if((int)k == tmp){
+            lw->takeItem(i); // debiram polozku z abecedniho list widgetu
+            break;
+            qDebug() << "Odebiram kandidata " << k->toString() << " z ui->lw_abecedne";
+        }
+    }
 }
 
 void Firma::updateDetail(Kandidat *k)
@@ -179,4 +212,65 @@ void Firma::on_lw_prijat_itemClicked(QListWidgetItem *item)
 void Firma::on_lw_zamitnut_itemClicked(QListWidgetItem *item)
 {
     updateDetail((Kandidat *)item);
+}
+
+void Firma::on_btn_login_clicked()
+{
+    Login l;
+    l.setWindowTitle("Prihlaseni uzivatele");
+    l.setModal(true);
+    int vystup = l.exec();
+
+    if(vystup == QDialog::Accepted){
+        f_prihlasen = "admin";
+        // uzivatel zadal spravne prihlasovaci udaje pro admina
+    } else {
+        f_prihlasen = "user";
+        // uzivatel zadal spravne udaje pro usera
+    }
+
+    upravProstredi();
+
+}
+
+void Firma::upravProstredi()
+{
+    bool hodnota;
+    if(f_prihlasen == "admin"){
+        hodnota = true;
+    } else {
+        hodnota = false;
+    }
+
+    ui->l_prihlasen->setText(f_prihlasen);
+
+    ui->btn_n_dale->setEnabled(hodnota);
+    ui->btn_n_zamitnout->setEnabled(hodnota);
+    ui->btn_s_dale->setEnabled(hodnota);
+    ui->btn_s_zamitnout->setEnabled(hodnota);
+
+    // aktualni zalozka je "Prehled"
+    ui->tabWidget->setCurrentIndex(0);
+    // povolime nebo nepovolime zalozku "Detail"
+    ui->tabWidget->setTabEnabled(1, hodnota);
+}
+
+void Firma::on_btn_novy_clicked()
+{
+    Novy n;
+    n.setWindowTitle("Novy kandidat");
+    int vystup = n.exec();
+    if(vystup == QDialog::Accepted){
+        Kandidat * k = new Kandidat(n.n_jmeno, n.n_prijmeni, n.n_narozen, n.n_foto);
+        pridejKandidata(k, f_novi_kandidati, ui->lw_novy);
+    }
+}
+
+void Firma::on_lw_abecedne_itemClicked(QListWidgetItem *item)
+{
+    // ziskam ukazatel na kandidata a musim ho pretypovat,
+    // protoze je ulozeny v listwidgetu jako QVariant
+    QVariant var = item->data(Qt::UserRole);
+    Kandidat * k = (Kandidat *) var.toInt();
+    updateDetail(k);
 }

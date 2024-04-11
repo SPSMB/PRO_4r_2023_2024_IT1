@@ -21,6 +21,7 @@ public:
 
     Kandidat(QString jmeno, QString prijmeni, int narozen, QString foto);
     QString toString();
+    QString toABCString();
     QString stav(); // vraci aktualni stav kandidata
     void posunStav(bool rozhodnuti);
     int vek();

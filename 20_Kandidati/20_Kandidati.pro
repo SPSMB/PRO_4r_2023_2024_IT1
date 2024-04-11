@@ -17,15 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     kandidat.cpp \
+    login.cpp \
     main.cpp \
-    firma.cpp
+    firma.cpp \
+    novy.cpp
 
 HEADERS += \
     firma.h \
-    kandidat.h
+    kandidat.h \
+    login.h \
+    novy.h
 
 FORMS += \
-    firma.ui
+    firma.ui \
+    login.ui \
+    novy.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

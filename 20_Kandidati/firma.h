@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QQueue>
 #include "kandidat.h"
+#include "login.h"
 #include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
@@ -19,7 +20,9 @@ public:
     ~Firma();
 
     void pridejKandidata(Kandidat * k, QQueue<Kandidat *> & fronta, QListWidget * lw);
+    void pridejKandidatadoQLW(Kandidat * k, QListWidget * lw);
     Kandidat * odeberKandidata(QQueue<Kandidat *> & fronta, QListWidget * lw);
+    void odeberKandidatazQLW(Kandidat * k, QListWidget * lw);
     void updateDetail(Kandidat * k); // funkce odpovedna za spravne vypsani informaci na karte detail
 
 private slots:
@@ -39,11 +42,20 @@ private slots:
 
     void on_lw_zamitnut_itemClicked(QListWidgetItem *item);
 
+    void on_btn_login_clicked();
+
+    void upravProstredi(); // upravi prostredu bud pro admina nebo pro usera
+
+    void on_btn_novy_clicked();
+
+    void on_lw_abecedne_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::Firma *ui;
     QQueue<Kandidat *> f_novi_kandidati;
     QQueue<Kandidat *> f_schvaleni_kandidati;
     QQueue<Kandidat *> f_prijati_kandidati;
     QQueue<Kandidat *> f_zamitnuti_kandidati;
+    QString f_prihlasen; // kdo je prihlasen
 };
 #endif // FIRMA_H
